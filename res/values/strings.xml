@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">Isis Demo</string>
+    <string name="vib_btn_text">Vibration</string>
+    <string name="vib_off">Vibration Off</string>
+    <string name="vib_on">Vibration On</string>
+    <string name="btn_viboff">Vibration Off</string>
+    <string name="btn_toggle_vib">Toggle</string>
+    <string name="btn_vibon">Vibration On</string>
+    <string name="btn_postmessage">Post Notification</string>
+</resources>

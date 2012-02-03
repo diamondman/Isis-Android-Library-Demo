@@ -1,0 +1,25 @@
+This demo is to give a demonstration of how to use the Isis Android Library. For a better description of the Isis library, check the thorough 
+documentation and the project readme at https://github.com/diamondman/Isis-Android-Library. The library is quite simple, but it abstracts 
+several difficult, hard to synchronize, or just plain frustrating and repetitive tasks of making a multi local service provider to multi service 
+consumer architecture. 
+
+The sample is an Android application that creates several IsisServices and binds them to instances of the only activity (press options to find a 
+menu item to create a new instance so you can test multiple Activity consuming the same resources). An important thing to know about the Service
+architecture in this demo is how the CentralService works. It is started with StartService instead of through a ServiceWrapper (which uses 
+BindService) so it stays in memory until it is told to quit. The CentralService then loads the other services into memory and holds onto them until
+it quits. To quit the CentralService, I provided a function in the CentralServiceWrapper that sends a message to the CentralService telling it to 
+stop. When the CentralService is asked to stop, it sends termination signals to the activity which result in a call to finish(), which then 
+automatically releases the ServiceWrappers the Activity held onto, leaving nothing bound to any Service so everything can drop out of memory in a 
+safe way. This implementation may need to be tweaked a bit (maybe using a BroadcastReceiver or a clever message distribution scheme) to allow 
+Services to bind to each other (because in the current implementation they could end up keeping each other in memory forever).
+
+With that basic and somewhat vague explanation out of the way, the Demo provides two real services of any interest besides the CentralService. They
+control the vibration of the phone (FeedbackService) and store a string that you can modify (CustomMessageService). The point of these services is 
+show how the messaging system works. When you tap the button to start vibration, it doesn't immediately disable the on button, instead it waits for
+a message to come back and throw the onVibrationStart event to do it. This prevents a corrupted state of a on button disabled while the vibration
+is off. Yes, this is a little overkill of a synchronization method for this simple of an application. But that is why it is a demo. If you have 
+several services running with several Activities and network traffic is changing the state of certain resources, a good multi-multi synchronization
+system is a must.
+
+I hope this helps out any one interested in using Isis. If not, feel free to contact me at jessy@jessyexum.com and ask for help. REmember that 
+Isis is very open and doesn't assume much about how you want to do stuff, so feel free to experiment and tell me if you use it for anything XD.
